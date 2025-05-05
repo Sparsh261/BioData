@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profile Page</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #f0f2f5;
+      color: #333;
+      scroll-behavior: smooth;
+    }
+
+    .hero {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #d9a7c7, #fffcdc);
+      padding-top: 40px;
+    }
+
+    /* Flip container */
+    .flip-container {
+      perspective: 1000px;
+      width: 380px;
+      height: 450px;
+    }
+
+    .flipper {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transition: transform 0.8s;
+      transform-style: preserve-3d;
+      border-radius: 20px;
+      box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+    }
+
+    .flip-container:hover .flipper {
+      transform: rotateY(180deg);
+    }
+
+    .front, .back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .front {
+      background-color: #fff;
+    }
+
+    .front img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .back {
+      background: #ffffff;
+      transform: rotateY(180deg);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 30px;
+      text-align: center;
+    }
+
+    .back h2 {
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .back p {
+      color: #555;
+      margin: 6px 0;
+    }
+
+    /* Info section */
+    .info {
+      max-width: 650px;
+      margin: 60px auto;
+      padding: 0 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 18px 24px;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+      opacity: 0;
+      transform: translateX(-60px);
+      transition: all 0.6s ease-out;
+    }
+
+    .info-row.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .label {
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: #555;
+    }
+
+    .value {
+      font-size: 1.1rem;
+      color: #222;
+    }
+
+    @media (max-width: 600px) {
+      .info-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+
+      .label, .value {
+        font-size: 1rem;
+      }
+
+      .flip-container {
+        width: 90%;
+        height: 400px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="flip-container">
+      <div class="flipper">
+        <!-- Front side -->
+        <div class="front">
+          <img src="./DID.jpg" alt="Profile Picture">
+        </div>
+        <!-- Back side -->
+        <div class="back">
+          <h2>John Doe</h2>
+          <p><strong>Age:</strong> 29</p>
+          <p><strong>Height:</strong> 6'1"</p>
+          <p><strong>Occupation:</strong> Software Engineer</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Scroll animation logic
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.2 });
+
+    document.querySelectorAll('.info-row').forEach(row => observer.observe(row));
+  </script>
+</body>
+</html>
